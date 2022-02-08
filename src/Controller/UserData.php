@@ -75,13 +75,17 @@ class UserData extends AbstractController
 
 
     /**
-     * @Route("/user/create-user/name={name}&email={email}")
+     * @Route("/user/create-user/name={name}&phone={phone}&birthDate={birthDate}&email={email}&password={password}&cpf={cpf}")
      */
-    public function data(string $name, string $email): Response
+    public function data(string $name, string $phone, string $birthDate, string $email, string $password, string $cpf): Response
     {
         $user = new User();
         $user->setName($name);
+        $user->setPhone($phone);
+        $user->setBirthDate($birthDate);
         $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setCpf($cpf);
 
 
         $entityManager = $this->getDoctrine()->getManager();

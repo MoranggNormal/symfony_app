@@ -28,7 +28,7 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->select('u.id, u.name, u.email, u.phone, u.birthDate, u.cpf')
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('u.id', 'DESC')
             ->getQuery()
             ->getResult();
     }

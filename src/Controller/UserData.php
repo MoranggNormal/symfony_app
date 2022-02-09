@@ -18,12 +18,10 @@ class UserData extends AbstractController
     {
 
         $users = $this->getDoctrine()->getRepository(User::class);
-
-        $userList = $users->findAll();
+        $userList = $users->findAllUsers();
 
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($userList, 'json');
-
 
         return new Response(
             $data

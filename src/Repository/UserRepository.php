@@ -33,6 +33,21 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // /**
+    //  * @return User[] Returns an array of User objects
+    //  */
+
+    public function filterEmail($param)
+    {
+
+        return $this->createQueryBuilder('u')
+            ->select('u.email')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $param)
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?User

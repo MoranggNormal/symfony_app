@@ -16,34 +16,10 @@ class UserData extends AbstractController
      */
     public function filterAllUsers(): Response
     {
-
-        $users = $this->getDoctrine()->getRepository(User::class);
-        $userList = $users->findAllUsers();
-
+        $getData = $this->getDoctrine()->getRepository(User::class);
+        $result = $getData->findAllUsers();
         $serializer = $this->get('serializer');
-        $data = $serializer->serialize($userList, 'json');
-
-        return new Response(
-            $data
-        );
-    }
-
-
-    /** 
-     * @Route("/user/name={userName}")
-     */
-    public function filterByName($userName): Response
-    {
-
-        $users = $this->getDoctrine()->getRepository(User::class);
-
-        $userList = $users->findBy([
-            'name' => $userName
-        ]);
-
-        $serializer = $this->get('serializer');
-        $data = $serializer->serialize($userList, 'json');
-
+        $data = $serializer->serialize($result, 'json');
 
         return new Response(
             $data
@@ -53,24 +29,17 @@ class UserData extends AbstractController
     /** 
      * @Route("/user/email={userEmail}")
      */
-    public function filterByEmail($userEmail): Response
+    public function filterByEMail(string $userEmail): Response
     {
-
-        $users = $this->getDoctrine()->getRepository(User::class);
-
-        $userList = $users->findBy([
-            'email' => $userEmail
-        ]);
-
+        $getData = $this->getDoctrine()->getRepository(User::class);
+        $result = $getData->filterEmail($userEmail);
         $serializer = $this->get('serializer');
-        $data = $serializer->serialize($userList, 'json');
-
+        $data = $serializer->serialize($result, 'json');
 
         return new Response(
             $data
         );
     }
-
 
     /**
      * @Route("/user/create-user/name={name}&phone={phone}&birthDate={birthDate}&email={email}&password={password}&cpf={cpf}")
@@ -84,7 +53,6 @@ class UserData extends AbstractController
         $user->setEmail($email);
         $user->setPassword($password);
         $user->setCpf($cpf);
-
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);

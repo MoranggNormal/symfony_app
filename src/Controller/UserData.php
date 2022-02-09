@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,14 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserData extends AbstractController
 {
-
-    /** 
+    /**
      * @Route("/user/all-users")
+     * @param UserRepository $userRepository
+     * @return Response
      */
-    public function filterAllUsers(): Response
+    public function filterAllUsers(UserRepository $userRepository): Response
     {
-        $getData = $this->getDoctrine()->getRepository(User::class);
-        $result = $getData->findAllUsers();
+        $result = $userRepository->findAllUsers();
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($result, 'json');
 
@@ -26,13 +27,15 @@ class UserData extends AbstractController
         );
     }
 
-    /** 
+    /**
      * @Route("/user/email={userEmail}")
+     * @param UserRepository $userRepository
+     * @param string $userEmail
+     * @return Response
      */
-    public function filterByEMail(string $userEmail): Response
+    public function filterByEMail(UserRepository $userRepository, string $userEmail): Response
     {
-        $getData = $this->getDoctrine()->getRepository(User::class);
-        $result = $getData->filterEmail($userEmail);
+        $result = $userRepository->filterEmail($userEmail);
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($result, 'json');
 
@@ -59,7 +62,7 @@ class UserData extends AbstractController
         $entityManager->flush();
 
         return new Response(
-            '<html><body>User has been created.</body></html>'
+            '<html lang="pt-Br"><body>User has been created.</body></html>'
         );
     }
 }

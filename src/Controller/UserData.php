@@ -45,6 +45,23 @@ class UserData extends AbstractController
     }
 
     /**
+     * @Route("/user/last-created-user")
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function filterLastUser(UserRepository $userRepository): Response
+    {
+        $result = $userRepository->getLastCreatedUser();
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json');
+
+        return new Response(
+            $data
+        );
+    }
+
+
+    /**
      * @Route("/user/create-user/name={name}&phone={phone}&birthDate={birthDate}&email={email}&password={password}&cpf={cpf}")
      */
     public function data(string $name, string $phone, string $birthDate, string $email, string $password, string $cpf): Response

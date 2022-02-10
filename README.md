@@ -9,11 +9,13 @@ This is a backend project, i'm doing this for Auryn's test.
 
 > Filtering all the users without returning their password;
 
+> Filter the last item in the collection (last created account);
+
 > Filter by email, to prevent account with same email;
 
 > Post to create a new user account;
 
-- Create a repository with two handmade functions (findAllUsers and filterEmail)
+- Create a repository with three handmade functions (findAllUsers, filterEmail and getLastCreatedUser)
 - Create an entity named User;
 
 #### How can i use this?

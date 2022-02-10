@@ -33,7 +33,20 @@ class UserRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return User[] Returns an array of User objects
+    //  * @return the last created user
+    //  */
+    public function getLastCreatedUser()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.id, u.name, u.email, u.phone, u.birthDate, u.cpf')
+            ->orderBy('u.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // /**
+    //  * @return user email
     //  */
 
     public function filterEmail($param)
